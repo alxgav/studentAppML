@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.salaryController">
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button fx:id="printButton" mnemonicParsing="false" onAction="#printButtonAction" text="печать" />
+        </items>
+      </ToolBar>
+   </top>
+   <center>
+      <TableView fx:id="tableSotr" prefHeight="317.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="numColumn" prefWidth="75.0" text="№ п/п" />
+          <TableColumn fx:id="surnameColumn" prefWidth="150.0" text="Фамилия инициалы" />
+            <TableColumn fx:id="accountColumn" prefWidth="150.0" text="Счет" />
+            <TableColumn fx:id="sumColumn" prefWidth="100.0" text="Сумма" />
+        </columns>
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem fx:id="addMenu" mnemonicParsing="false" onAction="#addMenuAction" text="Unspecified Action" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
+      </TableView>
+   </center>
+   <bottom>
+      <FlowPane prefHeight="23.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Label" />
+         </children>
+      </FlowPane>
+   </bottom>
+</BorderPane>

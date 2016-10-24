@@ -1,0 +1,12 @@
+
+.deleteTraf >.label {
+    -fx-graphic: url("../res/img/delete.png");
+}
+.addML {
+   -fx-graphic: url("../res/img/add.png"); 
+}
+.buttons {
+    -fx-background-radius: 7 7 7 7;
+    -fx-background-color:  linear-gradient(crimson, limegreen );
+}
+

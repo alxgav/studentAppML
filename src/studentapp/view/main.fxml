@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane id="AnchorPane" prefHeight="520.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.mainController">
+   <center>
+      <TabPane prefHeight="445.0" prefWidth="511.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Маршрутний лист">
+               <content>
+                  <TableView fx:id="table_trafic_list" editable="true" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="num_mrColumn" prefWidth="75.0" text="№ маршрутного листа" />
+                      <TableColumn fx:id="data_mrColumn" prefWidth="75.0" text="Дата" visible="false" />
+                        <TableColumn fx:id="master_mrColumn" prefWidth="75.0" text="Майстер" />
+                        <TableColumn fx:id="time_mrColumn" prefWidth="75.0" text="Години" />
+                        <TableColumn fx:id="group_trColumn" prefWidth="75.0" text="Група" />
+                        <TableColumn fx:id="tr_mrColumn" prefWidth="75.0" text="ТЗ" />
+                    </columns>
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                            <MenuItem fx:id="deleteTraf" mnemonicParsing="false" onAction="#deleteTrafAction" styleClass="deleteTraf" text="Видалити запис" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
+                  </TableView>
+               </content></Tab>
+          <Tab text="Учні">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="table_trafic_student" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <columns>
+                            <TableColumn fx:id="SurnameColumn" prefWidth="150.0" text="Прізвище та ініціали" />
+                            <TableColumn fx:id="temaColumn" minWidth="0.0" prefWidth="78.0" text="№ вправи" />
+                              <TableColumn fx:id="timeColumn" prefWidth="85.0" text="Години" />
+                          </columns>
+                        </TableView>
+                     </center>
+                  </BorderPane>
+               </content>
+          </Tab>
+            <Tab text="Графік">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <items>
+                            <Button fx:id="buttonG" mnemonicParsing="false" onAction="#buttonGAction" text="Button" />
+                          </items>
+                        </ToolBar>
+                     </top>
+                     <center>
+                        <TableView fx:id="tableGraphic" editable="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <columns>
+                            <TableColumn fx:id="tgNColumn" prefWidth="75.0" text="№ п/п" />
+                            <TableColumn fx:id="tgStudentColumn" prefWidth="147.0" text="ПІБ" />
+                              <TableColumn fx:id="tgCommonColumn" minWidth="0.0" prefWidth="126.0" text="Календарні навчальні дні / числа місяця / № вправи">
+                                 <columns>
+                                    <TableColumn prefWidth="75.0" text="Column X" />
+                                 </columns></TableColumn>
+                          </columns>
+                        </TableView>
+                     </center>
+                  </BorderPane>
+               </content>
+            </Tab>
+            <Tab text="Наряд на випуск ТЗ">
+               <content>
+                  <SplitPane dividerPositions="0.2802197802197802" prefHeight="160.0" prefWidth="200.0">
+                     <items>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <center>
+                              <TableView fx:id="tableDAttire" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                <columns>
+                                  <TableColumn fx:id="tableDAttireColumn" prefWidth="200.0" text="Дата" />
+                                </columns>
+                                 <contextMenu>
+                                    <ContextMenu>
+                                      <items>
+                                        <MenuItem fx:id="AttireDate" mnemonicParsing="false" onAction="#addAttireDate" text="Добавить дату" />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
+                              </TableView>
+                           </center>
+                        </BorderPane>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <center>
+                              <TableView fx:id="tableDAttireAll" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                <columns>
+                                  <TableColumn fx:id="tableDAttireAllCol1" prefWidth="75.0" text="ТЗ" />
+                                  <TableColumn fx:id="tableDAttireAllCol2" prefWidth="75.0" text="№ ТЗ" />
+                                    <TableColumn fx:id="tableDAttireAllCol3" prefWidth="75.0" text="Майстер" />
+                                </columns>
+                                 <contextMenu>
+                                    <ContextMenu>
+                                      <items>
+                                        <MenuItem fx:id="RowAttire" mnemonicParsing="false" onAction="#deleteRowAttire" text="Удалить " />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
+                              </TableView>
+                           </center>
+                        </BorderPane>
+                     </items>
+                  </SplitPane>
+               </content>
+            </Tab>
+          <Tab text="Настройки ">
+               <content>
+                  <BorderPane prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TitledPane animated="false" text="untitled">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="553.0" prefWidth="200.0" />
+                          </content>
+                        </TitledPane>
+                        <TitledPane animated="false" prefHeight="430.0" prefWidth="202.0" text="untitled">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </TitledPane>
+                     </children>
+                     <top>
+                        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <items>
+                            <Button fx:id="addMasterButton" mnemonicParsing="false" onAction="#addMasterButtonAction" text="Додати майстра" />
+                              <Button fx:id="deleteMasterButton" mnemonicParsing="false" onAction="#deleteMasterButtonAction" text="Видалити майстра" />
+                              <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="1.0" />
+                              <Button fx:id="addTZ" mnemonicParsing="false" onAction="#addTZAction" text="Додати ТЗ" />
+                              <Button fx:id="deleteTZ" mnemonicParsing="false" onAction="#deleteTZAction" text="Видалити ТЗ" />
+                          </items>
+                        </ToolBar>
+                     </top>
+                     <center>
+                        <GridPane BorderPane.alignment="CENTER">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <ListView fx:id="masterList" prefHeight="399.0" prefWidth="200.0" />
+                              <TableView fx:id="table_cars" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                <columns>
+                                    <TableColumn fx:id="ID" prefWidth="75.0" text="№" />
+                                  <TableColumn fx:id="markaTZColumn" prefWidth="75.0" text="Марка ТЗ" />
+                                  <TableColumn fx:id="numTZColumn" prefWidth="75.0" text="Номер ТЗ" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </GridPane>
+                     </center>
+                  </BorderPane>
+               </content></Tab>
+        </tabs>
+      </TabPane>
+   </center>
+   <top>
+      <Pane prefHeight="75.0" prefWidth="728.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane hgap="5.0" vgap="3.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <DatePicker fx:id="tr_data" onAction="#tr_dataAction" promptText="Дата " />
+                  <TextField fx:id="tr_num" prefHeight="25.0" prefWidth="46.0" promptText="№ маршрутного листа" GridPane.columnIndex="1" />
+                  <TextField fx:id="tr_group" prefHeight="25.0" prefWidth="36.0" promptText="Група" GridPane.columnIndex="2" />
+                  <ComboBox fx:id="tr_master" prefWidth="150.0" promptText="Майстер" GridPane.rowIndex="1" />
+                  <TextField fx:id="tr_time_end" prefHeight="25.0" prefWidth="46.0" promptText="Повернення в парк" text="20:00" GridPane.columnIndex="4">
+                     <tooltip>
+                        <Tooltip text="Количество колонок" />
+                     </tooltip></TextField>
+                  <TextField fx:id="tr_time_begin" prefHeight="25.0" prefWidth="41.0" promptText="Виїзд із парку" text="8:00" GridPane.columnIndex="3">
+                     <tooltip>
+                        <Tooltip text="количество учеников" />
+                     </tooltip></TextField>
+                  <ComboBox fx:id="tr_car" prefWidth="150.0" promptText="Авто" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="tr_dist_on" promptText="При виїзді з парку" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="tr_dist_off" promptText="При поверненні в парк" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="addML" mnemonicParsing="false" onAction="#addMLAction" styleClass="addML" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Button fx:id="testbutton" mnemonicParsing="false" onAction="#testbuttonAction" text="XLS" GridPane.columnIndex="6" />
+                  <Button fx:id="printButton" mnemonicParsing="false" onAction="#printButtonAction" text="Друк" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                  <Button fx:id="tabelBTN" mnemonicParsing="false" onAction="#tabelBTNAction" text="Табель" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+   </top>
+</BorderPane>
