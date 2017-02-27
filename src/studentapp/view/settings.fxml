@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+<BorderPane prefHeight="378.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.SettingsController">
+   <center>
+             <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                 <Tab text="Спеціалісти">
+                     <BorderPane>
+                         <center>
+                             <TableView fx:id="masterTable" prefHeight="139.0" prefWidth="580.0" BorderPane.alignment="CENTER">
+                                 <columns>
+                                     <TableColumn fx:id="masterColumn" prefWidth="599.0" resizable="false" text="Спеціаліст">
+                                         <cellValueFactory>
+                                             <PropertyValueFactory property="master_name" />
+                                         </cellValueFactory>
+                                     </TableColumn>
+      
+                                       </columns>
+                             </TableView>
+                         </center>
+               <top>
+                   <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                       <TextField fx:id="MasterText" promptText="Спеціаліст" />
+                       <Button fx:id="addButtonMaster" mnemonicParsing="false" onAction="#addButtonMasterAction" styleClass="addButton"/>
+                       <Button fx:id="editButtonMaster" mnemonicParsing="false" onAction="#editButtonMasterAction" styleClass="editButton"  />
+                       <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="1.0" />
+                       <Button fx:id="deleteButtonMaster" mnemonicParsing="false" onAction="#deleteButtonMasterAction" styleClass="deleteButton" />
+                   </ToolBar>
+               </top>
+                     </BorderPane>
+                 </Tab>
+                 <Tab text="Транспортні засоби">
+                     <BorderPane>
+                         <center>
+                             <TableView fx:id="carsTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <columns>
+                                     <TableColumn prefWidth="132.0" text="Назва ТЗ">
+                                         <cellValueFactory>
+                                             <PropertyValueFactory property="car_name" />
+                                         </cellValueFactory>
+                                     </TableColumn>
+                                     <TableColumn prefWidth="128.0" text="Номерний знак">
+                                         <cellValueFactory>
+                                             <PropertyValueFactory property="car_num" />
+                                         </cellValueFactory>
+                                     </TableColumn>
+                                 </columns>
+                             </TableView>
+                         </center>
+               <top>
+                   <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                       <Button fx:id="carsAddButton" mnemonicParsing="false" onAction="#carsAddButtonAction"
+                               styleClass="addButton"/>
+                       <Button fx:id="carsdeleteButton" mnemonicParsing="false" onAction="#carsdeleteButtonAction"
+                               styleClass="deleteButton"/>
+                   </ToolBar>
+               </top>
+                     </BorderPane>
+                 </Tab>
+                 <Tab text="Завнтаження графіка">
+                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                         <TextField fx:id="colValue" layoutX="14.0" layoutY="14.0" promptText="Кількість колонок" />
+                         <TextField fx:id="students" layoutX="14.0" layoutY="48.0" promptText="Кількість учнів" />
+                         <ComboBox fx:id="mastersBox" layoutX="14.0" layoutY="116.0" prefWidth="150.0" promptText="Спеціалісти" />
+                         <Button id="excelButton" fx:id="excelButton" layoutX="14.0" layoutY="157.0" mnemonicParsing="false" onAction="#excelButtonAction" />
+               <TextField fx:id="Group" layoutX="15.0" layoutY="80.0" promptText="Навчальна група" />
+                     </AnchorPane>
+                 </Tab>
+             </TabPane>
+   </center>
+   <top>
+       <ToolBar prefHeight="20.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+           <Button mnemonicParsing="false" text="Button" />
+       </ToolBar>
+   </top>
+</BorderPane>

@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="com.j256.ormlite:ormlite-jdbc:5.0" type="repository">
+    <properties maven-id="com.j256.ormlite:ormlite-jdbc:5.0" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/ormlite-jdbc-5.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ormlite-core-5.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/log4j-1.2.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/log4j-api-2.0-beta4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/ormlite-jdbc-5.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/ormlite-jdbc-5.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

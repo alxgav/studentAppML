@@ -8,9 +8,12 @@ package studentapp.raport.xls;
 import jxl.DateCell;
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.format.VerticalAlignment;
 import jxl.read.biff.BiffException;
+import jxl.write.*;
 import studentapp.common.common;
 import studentapp.db.data.graph;
+import studentapp.db.data.trafic;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,14 +21,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import jxl.format.VerticalAlignment;
-import jxl.write.Label;
-import jxl.write.WritableCellFormat;
-import jxl.write.WritableFont;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
-import studentapp.db.data.trafic;
 
 /**
  *
@@ -33,16 +28,16 @@ import studentapp.db.data.trafic;
  */
 public class makeXLS {
 
-    graph g;
-    String data;
-    String student;
-    String tema;
-    String tema_time;
-    String t1;
-    String t2;
-    String [] time ={"одна","дві"," ","00","30"};
-    int r =6;
-    common com;
+    private graph g;
+    private String data;
+    private String student;
+    private String tema;
+    private String tema_time;
+    private String t1;
+    private String t2;
+    private String[] time = {"одна", "дві", " ", "00", "30"};
+    private int r = 6;
+    private common com;
     public makeXLS() {
     }
     
@@ -50,6 +45,9 @@ public class makeXLS {
         String [] m = master.split(" ");
         Workbook workbook = Workbook.getWorkbook(new File("g.xls"));
         Sheet sheet = workbook.getSheet(m[0].toUpperCase());
+        if (sheet == null) {
+            sheet = workbook.getSheet(0);
+        }
         com = new common();
      //   SimpleDateFormat format =new SimpleDateFormat("dd.MM.yyyy");
         for(int row=1;row<=s;row++){ //s количество студентов

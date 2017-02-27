@@ -5,9 +5,10 @@
  */
 package studentapp.db.data;
 
-import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import studentapp.common.CustomDate;
+
 import java.util.Date;
 
 
@@ -22,8 +23,8 @@ public class trafic {
       @DatabaseField(generatedId = true)
        private int id;
       @DatabaseField
-      private int number_tr;
-      @DatabaseField(dataType = DataType.DATE_STRING)
+      private String number_tr;
+    @DatabaseField //(dataType = DataType.DATE_STRING)
       private Date data_tr;
       @DatabaseField
       private int group;
@@ -33,14 +34,16 @@ public class trafic {
       private String master_tr;
       @DatabaseField
       private String auto;
+    @DatabaseField
+    private String auto_number;
       
    
     
    public trafic(){
        
    }
-   
-    public trafic(int number_tr,Date data_tr,int group, String time_drive,String master_tr,String auto){
+
+    public trafic(String number_tr, Date data_tr, int group, String time_drive, String master_tr, String auto, String auto_number) {
           
         
         this.number_tr = number_tr;
@@ -49,31 +52,30 @@ public class trafic {
         this.time_drive = time_drive;
         this.master_tr = master_tr;
         this.auto = auto;
+        this.auto_number = auto_number;
     }
-    
 
-    public trafic(int number_tr){
+
+    public trafic(String number_tr) {
         this.number_tr = number_tr;
     }
    
    public int getId() {
         return id;
     }
-   public int getNumber_tr() {
+
+    public String getNumber_tr() {
         return number_tr;
     }
 
-   public void setNumber_tr(int number_tr) {
+    public void setNumber_tr(String number_tr) {
         this.number_tr = number_tr;
     }
    public Date getData_tr() {
-      
-        return data_tr;
+       return new CustomDate(data_tr.getTime());
     }
 
    public void setData_tr(Date data_tr) {
-       
-        
         this.data_tr = data_tr;
     } 
     
@@ -109,5 +111,13 @@ public class trafic {
 
     public String getAuto() {
         return auto;
+    }
+
+    public String getAuto_number() {
+        return auto_number;
+    }
+
+    public void setAuto_number(String auto_number) {
+        this.auto_number = auto_number;
     }
 }

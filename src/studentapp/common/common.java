@@ -8,20 +8,21 @@ package studentapp.common;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
-import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
 import studentapp.db.data.cars;
 import studentapp.db.data.graph;
 import studentapp.db.data.master;
 import studentapp.db.data.trafic;
 import studentapp.db.dbConnection;
 
+import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
+
 /**
  *
  * @author Алексей
  */
 public class common {
-   public ConnectionSource con = new dbConnection().getConnection();
+   private ConnectionSource con = new dbConnection().getConnection();
    public Dao<master, String> masters;
    public Dao<cars, String> cars;
    public Dao<graph, String> graph;
@@ -42,11 +43,16 @@ public class common {
                               "жовтня",
                               "листопада",
                               "грудня"};
-    public common() throws SQLException {
-        this.masters = DaoManager.createDao(con, master.class);
-        this.cars = DaoManager.createDao(con, cars.class);
-        this.graph = DaoManager.createDao(con,  graph.class);
-        this.trafic = DaoManager.createDao(con,  trafic.class);
+    public common() {
+        try {
+            this.masters = DaoManager.createDao(con, master.class);
+            this.cars = DaoManager.createDao(con, cars.class);
+            this.graph = DaoManager.createDao(con,  graph.class);
+            this.trafic = DaoManager.createDao(con,  trafic.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         
     }
     

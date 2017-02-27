@@ -10,3 +10,28 @@
     -fx-background-color:  linear-gradient(crimson, limegreen );
 }
 
+.grColumns {
+    -fx-alignment: center-right;
+    -fx-arc-height: 20px;
+}
+
+#tablegraphic {
+    -fx-background-color: linear-gradient(crimson, limegreen);
+}
+
+#printButton{
+    -fx-graphic: url("../res/img/printer.png");
+}
+#excelButton{
+    -fx-graphic: url("../res/img/excel.png");
+}
+.addButton{
+    -fx-graphic: url("../res/img/add.png");
+}
+.editButton{
+    -fx-graphic: url("../res/img/add.png");
+}
+.deleteButton{
+    -fx-graphic: url("../res/img/delete.png");
+}
+

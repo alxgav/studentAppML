@@ -23,8 +23,12 @@ public class master {
 
     public master() {
     }
-    
-     public int getId() {
+
+    public master(String master_name) {
+        this.master_name = master_name;
+    }
+
+    public int getId() {
         return id;
     }
       public String getMaster_name() {
