@@ -15,7 +15,6 @@ import fr.opensagres.xdocreport.template.IContext;
 import fr.opensagres.xdocreport.template.formatter.FieldsMetadata;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -28,7 +27,6 @@ import javafx.scene.control.TextField;
 import jxl.read.biff.BiffException;
 import jxl.write.WriteException;
 import studentapp.StudentApp;
-import studentapp.common.CustomDate;
 import studentapp.common.common;
 import studentapp.common.dateCalc;
 import studentapp.db.data.*;
@@ -54,6 +52,8 @@ import java.util.List;
 
 import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
+
+//import studentapp.common.CustomDate;
 
 /**
  *
@@ -85,15 +85,7 @@ public class mainController implements Initializable {
     @FXML
     private ComboBox<master> tr_master;
     @FXML
-    private TextField tr_time_end;
-    @FXML
-    private TextField tr_time_begin;
-    @FXML
     private ComboBox<cars> tr_car;
-    @FXML
-    private TextField tr_dist_on;
-    @FXML
-    private TextField tr_dist_off;
     @FXML
     private TableView<trafic> table_trafic_list;
     @FXML
@@ -103,16 +95,7 @@ public class mainController implements Initializable {
 
     @FXML
     private ListView<master> masterList;
-    @FXML
-    private Button addMasterButton;
-    @FXML
-    private Button deleteMasterButton;
-    @FXML
-    private Button addTZ;
-    @FXML
-    private Button deleteTZ;
 
-    
     @FXML
     private TableView<cars> table_cars;
     @FXML
@@ -125,8 +108,6 @@ public class mainController implements Initializable {
 
     List<String> columns;
     
-    @FXML
-    private Button testbutton;
     @FXML
     private TableColumn<graph, String> SurnameColumn;
     @FXML
@@ -292,9 +273,7 @@ public class mainController implements Initializable {
         LocalDate d = tr_data.getValue();
         Instant instant  = d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
         t = new trafic(tr_num.getText(),
-            
               Date.from(instant),
-              
                 Integer.valueOf(tr_group.getText().equals("")?"0":tr_group.getText()),
                 setTime(),
                 ""+tr_master.getSelectionModel().getSelectedItem(),
@@ -374,7 +353,7 @@ public class mainController implements Initializable {
         table_trafic_list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             QueryBuilder<graph, String> qb = com.graph.queryBuilder();
             try {
-                qb.where().eq("master", newValue.getMaster_tr()).and().eq("data", new CustomDate(newValue.getData_tr().getTime()));// new SimpleDateFormat("dd.MM.yyyy").format(master.getData_tr())
+                qb.where().eq("master", newValue.getMaster_tr()).and().eq("data",  new SimpleDateFormat("dd.MM.yyyy").format(newValue.getData_tr()));//
                 PreparedQuery<graph> preparedQuery;
                 preparedQuery = qb.prepare();
                 List<graph> g = com.graph.query(preparedQuery);
@@ -389,7 +368,7 @@ public class mainController implements Initializable {
     /////***
 
     @FXML
-    private void deleteTrafAction(ActionEvent event) throws SQLException {
+    private void deleteTrafAction() throws SQLException {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Видалити запис");
         alert.setHeaderText("Видалити запис");
@@ -428,7 +407,7 @@ public class mainController implements Initializable {
     }
 
     @FXML
-    private void addAttireDate(ActionEvent event) {
+    private void addAttireDate() {
 //      tableDAttireColumn.setCellValueFactory(new PropertyValueFactory<>("attire_date"));
 //      ATTIRE.add(new attire(tr_data.getValue()));
 //      tableDAttire.setItems(ATTIRE);

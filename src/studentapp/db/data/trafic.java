@@ -5,9 +5,9 @@
  */
 package studentapp.db.data;
 
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import studentapp.common.CustomDate;
 
 import java.util.Date;
 
@@ -24,7 +24,7 @@ public class trafic {
        private int id;
       @DatabaseField
       private String number_tr;
-    @DatabaseField //(dataType = DataType.DATE_STRING)
+    @DatabaseField (dataType = DataType.DATE_STRING)
       private Date data_tr;
       @DatabaseField
       private int group;
@@ -72,7 +72,7 @@ public class trafic {
         this.number_tr = number_tr;
     }
    public Date getData_tr() {
-       return new CustomDate(data_tr.getTime());
+       return data_tr;
     }
 
    public void setData_tr(Date data_tr) {

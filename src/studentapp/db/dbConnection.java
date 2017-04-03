@@ -7,8 +7,9 @@ package studentapp.db;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
-import java.sql.SQLException;
 import studentapp.message.error.error;
+
+import java.sql.SQLException;
 
 /**
  *

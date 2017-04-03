@@ -8,11 +8,12 @@ package studentapp.raport.xls;
 import fr.opensagres.xdocreport.core.XDocReportException;
 import fr.opensagres.xdocreport.template.TemplateEngineKind;
 import fr.opensagres.xdocreport.template.formatter.FieldsMetadata;
+import studentapp.db.data.graph;
+import studentapp.db.data.trafic;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import studentapp.db.data.graph;
-import studentapp.db.data.trafic;
 
 /**
  *

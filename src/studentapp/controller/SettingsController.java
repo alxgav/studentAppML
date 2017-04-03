@@ -3,7 +3,6 @@ package studentapp.controller;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -48,7 +47,6 @@ public class SettingsController implements Initializable {
     public Button carsdeleteButton;
 
     private Stage dialogStage;
-    //private common com;
     private ObservableList<master> m; //masters
     private ObservableList<cars> car; //masters
     private dbOperation dbo  = new dbOperation() ;
@@ -57,7 +55,6 @@ public class SettingsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         try {
             m = dbo.setMaster();
             setBox();
@@ -73,11 +70,11 @@ public class SettingsController implements Initializable {
     }
 
 
-    public void addButtonMasterAction(ActionEvent actionEvent) throws SQLException {
+    public void addButtonMasterAction() throws SQLException {
         dbo.addMaster(MasterText.getText(),m);
     }
 
-    public void editButtonMasterAction(ActionEvent actionEvent) throws SQLException {
+    public void editButtonMasterAction() throws SQLException {
         master mast =  masterTable.getSelectionModel().getSelectedItem();
         dbo.editMaster(mast.getMaster_name(),MasterText.getText());
         m.remove(mast);
@@ -101,14 +98,14 @@ public class SettingsController implements Initializable {
         }
     }
 
-    public void excelButtonAction(ActionEvent actionEvent) throws BiffException, SQLException, ParseException, IOException {
+    public void excelButtonAction() throws BiffException, SQLException, ParseException, IOException {
             String colColumn = colValue.getText();
             String student = students.getText();
             String group = Group.getText();
             if (!colColumn.equals("")||!student.equals("")||!group.equals("")){
                 new makeXLS().setGraphic(""+mastersBox.getSelectionModel().getSelectedItem(),
-                        Integer.parseInt(colColumn),
                         Integer.parseInt(student),
+                        Integer.parseInt(colColumn),
                         Integer.parseInt(group));
             }
     }
