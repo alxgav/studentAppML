@@ -157,7 +157,7 @@ public class mainController implements Initializable {
     @FXML
     private TableColumn<trafic, String> tr_mrNumberColumn;
 
-
+    private Desktop desk = Desktop.getDesktop();
 
     private ObservableList<master> m = FXCollections.observableArrayList(); //masters
     private ObservableList<cars> car = FXCollections.observableArrayList();//cars_table
@@ -245,7 +245,7 @@ public class mainController implements Initializable {
 
     private void setStudent(LocalDate d) throws SQLException {
        QueryBuilder<graph,String> qb = com.graph.queryBuilder();
-       qb.where().eq("master",""+tr_master.getSelectionModel().getSelectedItem()).and().eq("data",com.formatter.format(d) );
+       qb.where().eq("master",""+tr_master.getSelectionModel().getSelectedItem()).and().eq("data",com.formatter.format(d)).and().eq("group",tr_group.getText());
        PreparedQuery<graph> preparedQuery = qb.prepare();
        List <graph> g = com.graph.query(preparedQuery);
        graph.clear();
@@ -320,6 +320,7 @@ public class mainController implements Initializable {
     @FXML
     private void printButtonAction() throws XDocReportException, IOException, SQLException {
         IXDocReport report;
+
         odtx_report odtx = new odtx_report();
         report = odtx.loadODT("mr");
         FieldsMetadata fieldsMetadata = report.createFieldsMetadata();
@@ -343,9 +344,10 @@ public class mainController implements Initializable {
         context.put("trafic",selectedCells);
         context.put("graph",graph);
         OutputStream out = odtx.outODT();
-        Desktop desk = Desktop.getDesktop();
-        desk.open(new File("template.odt"));
         report.process(context, out);
+
+        desk.open(new File("template.odt"));
+
     }
     
     // tabletrafic change listener
@@ -353,13 +355,14 @@ public class mainController implements Initializable {
         table_trafic_list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             QueryBuilder<graph, String> qb = com.graph.queryBuilder();
             try {
-                qb.where().eq("master", newValue.getMaster_tr()).and().eq("data",  new SimpleDateFormat("dd.MM.yyyy").format(newValue.getData_tr()));//
+                qb.where().eq("master", newValue.getMaster_tr()).and().eq("data",  new SimpleDateFormat("dd.MM.yyyy").format(newValue.getData_tr())).and().eq("group",newValue.getGroup());//
                 PreparedQuery<graph> preparedQuery;
                 preparedQuery = qb.prepare();
                 List<graph> g = com.graph.query(preparedQuery);
                 graph.clear();
                 g.forEach((r) -> graph.add(r));
                 table_trafic_student.setItems(graph);
+                tr_group.setText(""+newValue.getGroup());
             } catch (SQLException ex) {
                 new  error().errorMessage(ex.toString());
             }
@@ -458,5 +461,6 @@ public class mainController implements Initializable {
     private StudentApp studentApp = new StudentApp();
     public void settingButtonAction() {
         studentApp.showSetting();
+
     }
 }
