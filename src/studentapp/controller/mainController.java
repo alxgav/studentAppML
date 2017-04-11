@@ -157,7 +157,7 @@ public class mainController implements Initializable {
     @FXML
     private TableColumn<trafic, String> tr_mrNumberColumn;
 
-    private Desktop desk = Desktop.getDesktop();
+    
 
     private ObservableList<master> m = FXCollections.observableArrayList(); //masters
     private ObservableList<cars> car = FXCollections.observableArrayList();//cars_table
@@ -318,7 +318,7 @@ public class mainController implements Initializable {
    
 
     @FXML
-    private void printButtonAction() throws XDocReportException, IOException, SQLException {
+    private void printButtonAction() throws XDocReportException, IOException, SQLException, InterruptedException {
         IXDocReport report;
 
         odtx_report odtx = new odtx_report();
@@ -327,7 +327,6 @@ public class mainController implements Initializable {
         fieldsMetadata.load("trafic", trafic.class, true);
         fieldsMetadata.load("graph", graph.class, true);
         IContext context = report.createContext();
-
 
         TableViewSelectionModel<trafic> selectionModel = table_trafic_list.getSelectionModel();
         ObservableList<trafic> selectedCells = selectionModel.getSelectedItems();
@@ -345,9 +344,18 @@ public class mainController implements Initializable {
         context.put("graph",graph);
         OutputStream out = odtx.outODT();
         report.process(context, out);
+        openODT();
 
-        desk.open(new File("template.odt"));
+    }
 
+    private  void openODT() throws IOException, InterruptedException {
+//        Desktop desk = Desktop.getDesktop();
+//        desk.open(new File("print/template.odt"));
+        if(Desktop.isDesktopSupported()){
+            System.out.println("prepare opening");
+            Desktop.getDesktop().open(new File("template.odt"));
+        }
+     
     }
     
     // tabletrafic change listener
