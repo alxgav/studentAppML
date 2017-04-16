@@ -62,8 +62,6 @@ public class dbOperation {
     // select student
     public List<graph> setStudent(String master, Integer group, String data) throws SQLException {
         QueryBuilder<graph, String> qb = c.graph.queryBuilder();
-        System.out.println("prepare");
-       System.out.println(master+" "+group+" "+data);
         qb.where().eq("master",master).and().eq("group",group).and().eq("data",data);
         PreparedQuery<graph> pq = qb.prepare();
         List<graph> m = c.graph.query(pq);

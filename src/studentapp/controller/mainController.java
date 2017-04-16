@@ -351,11 +351,16 @@ public class mainController implements Initializable {
     }
 
     private  void openODT() throws IOException, InterruptedException {
-//        Desktop desk = Desktop.getDesktop();
-//        desk.open(new File("print/template.odt"));
         if(Desktop.isDesktopSupported()){
-            System.out.println("prepare opening");
-            Desktop.getDesktop().open(new File("template.odt"));
+            new Thread(()->{
+                try {
+                    Desktop.getDesktop().open(new File("template.odt"));
+                } catch (IOException e) {
+                    new  error().errorMessage(e.toString());
+                }
+            }).start();
+
+
         }
      
     }
@@ -485,12 +490,10 @@ public class mainController implements Initializable {
         ChoiceDialog<graph> cd = new ChoiceDialog(d.get(0),d);
         cd.setHeaderText("Виберіть учня");
         cd.setTitle("Додати учня");
-
         Optional<graph> result = cd.showAndWait();
         if(result.isPresent()){
             System.out.println(result.get());
             graph.addAll(data);
-
             table_trafic_student.setItems(graph);
         }
     }
