@@ -15,6 +15,7 @@ import fr.opensagres.xdocreport.template.IContext;
 import fr.opensagres.xdocreport.template.formatter.FieldsMetadata;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -74,6 +75,7 @@ public class mainController implements Initializable {
     public Button grAddStudent;
     public TableColumn carsNumberColumn;
     public Button settingButton;
+    public MenuItem addPuiple;
 
 
     @FXML
@@ -364,8 +366,7 @@ public class mainController implements Initializable {
             QueryBuilder<graph, String> qb = com.graph.queryBuilder();
             try {
                 qb.where().eq("master", newValue.getMaster_tr()).and().eq("data",  new SimpleDateFormat("dd.MM.yyyy").format(newValue.getData_tr())).and().eq("group",newValue.getGroup());//
-                PreparedQuery<graph> preparedQuery;
-                preparedQuery = qb.prepare();
+                PreparedQuery<graph> preparedQuery = qb.prepare();
                 List<graph> g = com.graph.query(preparedQuery);
                 graph.clear();
                 g.forEach((r) -> graph.add(r));
@@ -470,5 +471,27 @@ public class mainController implements Initializable {
     public void settingButtonAction() {
         studentApp.showSetting();
 
+    }
+
+    public void addPuipleAction(ActionEvent actionEvent) throws SQLException {
+        TableViewSelectionModel<trafic> selectionModel = table_trafic_list.getSelectionModel();
+        ObservableList<trafic> selectedCells = selectionModel.getSelectedItems();
+        List<graph> data = dbo.setStudent(""+tr_master.getSelectionModel().getSelectedItem(),selectedCells.get(0).getGroup(),com.formatter.format(tr_data.getValue()));
+        ArrayList d = new ArrayList();
+        d.clear();
+        for(int i=0;i<=data.size()-1;i++){
+            d.add(data.get(i).getStudent());
+        }
+        ChoiceDialog<graph> cd = new ChoiceDialog(d.get(0),d);
+        cd.setHeaderText("Виберіть учня");
+        cd.setTitle("Додати учня");
+
+        Optional<graph> result = cd.showAndWait();
+        if(result.isPresent()){
+            System.out.println(result.get());
+            graph.addAll(data);
+
+            table_trafic_student.setItems(graph);
+        }
     }
 }

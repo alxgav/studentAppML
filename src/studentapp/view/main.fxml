@@ -5,7 +5,7 @@
 <?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<BorderPane id="AnchorPane" prefHeight="520.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.mainController">
+<BorderPane id="AnchorPane" prefHeight="520.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.mainController">
    <center>
        <TabPane prefHeight="445.0" prefWidth="511.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
            <Tab text="Маршрутний лист">
@@ -105,6 +105,13 @@
                                           </cellValueFactory>
                                       </TableColumn>
                                   </columns>
+                              <contextMenu>
+                                 <ContextMenu>
+                                   <items>
+                                     <MenuItem fx:id="addPuiple" mnemonicParsing="false" onAction="#addPuipleAction" text="Додати учня" />
+                                   </items>
+                                 </ContextMenu>
+                              </contextMenu>
                               </TableView>
                           </center>
                        </BorderPane>
@@ -248,7 +255,7 @@
    </center>
    <top>
        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-           <Button fx:id="settingButton" mnemonicParsing="false" onAction="#settingButtonAction" text="Button"/>
+           <Button fx:id="settingButton" mnemonicParsing="false" onAction="#settingButtonAction" text="Button" />
        </ToolBar>
    </top>
 </BorderPane>

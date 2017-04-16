@@ -13,6 +13,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import studentapp.common.common;
 import studentapp.db.data.cars;
+import studentapp.db.data.graph;
 import studentapp.db.data.master;
 
 import java.sql.SQLException;
@@ -57,6 +58,19 @@ public class dbOperation {
         ub.updateColumnValue("master_name",newSurname);
         ub.update();
     }
+
+    // select student
+    public List<graph> setStudent(String master, Integer group, String data) throws SQLException {
+        QueryBuilder<graph, String> qb = c.graph.queryBuilder();
+        System.out.println("prepare");
+       System.out.println(master+" "+group+" "+data);
+        qb.where().eq("master",master).and().eq("group",group).and().eq("data",data);
+        PreparedQuery<graph> pq = qb.prepare();
+        List<graph> m = c.graph.query(pq);
+        return m;
+    }
+
+
     /*
     cars
      */
