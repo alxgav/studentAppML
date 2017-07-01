@@ -10,11 +10,21 @@
       <root url="jar://$PROJECT_DIR$/lib/commons-lang-2.4.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/oro-2.0.8.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/org.osgi.core-4.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/fr.opensagres.xdocreport.template.velocity-2.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/fr.opensagres.xdocreport.template-2.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/fr.opensagres.xdocreport.core-2.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/velocity-1.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-collections-3.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-lang-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/oro-2.0.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.osgi.core-4.2.0.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/lib/fr.opensagres.xdocreport.template.velocity-2.0.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/fr.opensagres.xdocreport.template.velocity-2.0.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/fr.opensagres.xdocreport.template.velocity-2.0.0-sources.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/fr.opensagres.xdocreport.template.velocity-2.0.0-sources.jar!/" />
     </SOURCES>
   </library>

@@ -34,6 +34,7 @@ import studentapp.db.data.*;
 import studentapp.db.dbOperation;
 import studentapp.message.error.error;
 import studentapp.raport.odt.odtx_report;
+import studentapp.raport.xls.makeXLS;
 
 import java.awt.*;
 import java.io.File;
@@ -63,19 +64,25 @@ import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 public class mainController implements Initializable {
 
     public Button addML;
-    public TableView<String> tableGraphic;
+    public TableView<trafic> t_Tabel;
     public TableColumn tgStudentColumn;
     public Button buttonG;
     public TableView<cars> tablecars;
     public TableColumn<cars, Integer> idCarsColumn;
     public TableColumn<cars, String> carsNameColumn;
-    public ComboBox specComboBox;
     public DatePicker grDataBegin;
     public DatePicker grDataEnd;
     public Button grAddStudent;
     public TableColumn carsNumberColumn;
     public Button settingButton;
     public MenuItem addPuiple;
+    public TableColumn t_TabelColumn;
+    public ComboBox<master> specTabel;
+    public Button addTabelButton;
+    public TableColumn<trafic, java.sql.Date> TabelDataColumn;
+    public TableColumn<trafic,String> TabelTimeColumn;
+    public TextField group;
+    public ComboBox<cars> carList;
 
 
     @FXML
@@ -167,7 +174,7 @@ public class mainController implements Initializable {
     private ObservableList<graph> graph = FXCollections.observableArrayList(); //graph box
     private ObservableList<trafic> traf = FXCollections.observableArrayList(); //trafic_table
     private ObservableList ATTIRE = FXCollections.observableArrayList(); //attire
-    //  private ObservableList grData = FXCollections.observableArrayList();//grafic data
+    private ObservableList<trafic> tabelData = FXCollections.observableArrayList();//grafic data
     private common com = new common();
     private dbOperation dbo = new dbOperation();
     public mainController() {
@@ -196,11 +203,13 @@ public class mainController implements Initializable {
             setDateDoday();
 
            traficChanged();
-            GrTableChange();
+            //GrTableChange();
 
             setTraficToday();
 
             tr_num.setText(dbo.getLastNumber());
+            grDataBegin.setValue(LocalDate.now().with(firstDayOfMonth()));
+            grDataEnd.setValue(LocalDate.now().with(lastDayOfMonth()));
         } catch (SQLException ex) {
             new error().errorMessage(ex.toString());
         } 
@@ -213,6 +222,8 @@ public class mainController implements Initializable {
         m.forEach((r)->l.add(r.getMaster_name()));
         ObservableList mast = FXCollections.observableArrayList(l);
         tr_master.setItems(mast);
+        specTabel.setItems(mast);
+
 
     }
     private void setCarsBox() throws SQLException {
@@ -220,7 +231,7 @@ public class mainController implements Initializable {
 
         for (String res[] : rawResults) car_box.add(res[0]);
             tr_car.setItems(car_box); 
-
+            carList.setItems(car_box);
 
 
    }
@@ -330,6 +341,8 @@ public class mainController implements Initializable {
         fieldsMetadata.load("graph", graph.class, true);
         IContext context = report.createContext();
 
+       // Options options = Options.getTo(ConverterTypeTo.PDF).via(ConverterTypeVia.ODFDOM);
+
         TableViewSelectionModel<trafic> selectionModel = table_trafic_list.getSelectionModel();
         ObservableList<trafic> selectedCells = selectionModel.getSelectedItems();
         context.put("num_mr",selectedCells.get(0).getNumber_tr());
@@ -346,6 +359,9 @@ public class mainController implements Initializable {
         context.put("graph",graph);
         OutputStream out = odtx.outODT();
         report.process(context, out);
+
+      //  report.convert( context, options, out);
+
         openODT();
 
     }
@@ -410,16 +426,20 @@ public class mainController implements Initializable {
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         LocalDate initial = tr_data.getValue();
         String r;
-        List<String> days = d.datesBetween(initial.with(firstDayOfMonth()), initial.with(lastDayOfMonth()));
+        List<String> days = d.datesBetween(grDataBegin.getValue(), grDataEnd.getValue());
         for(String s:days){
             Date date = format.parse(s);
-            GenericRawResults<String[]> rawResults = com.trafic.queryRaw("SELECT time_drive from trafic where data_tr='"+new java.sql.Date(date.getTime())+"'");
-            List <String[]> g = rawResults.getResults();
-            if(g!=null){
-                 String[] resultArray = g.get(0);
-            r = resultArray[0];
-            System.out.println(r);
+            GenericRawResults<String[]> rawResults = com.trafic.queryRaw("SELECT time_drive from trafic where data_tr='"+
+                    new java.sql.Date(date.getTime())+" 00:00:00.000000' and master_tr='"+specTabel.getSelectionModel().getSelectedItem()+"'");
+//            List <String[]> g = rawResults.getResults();
+//            if(g!=null){
+//                 String[] resultArray = g.get(0);
+//            r = resultArray[0];
+//            System.out.println(r);
+            for(String [] res:rawResults){
+                System.out.println(res[0]);
             }
+
         }
     }
 
@@ -462,16 +482,16 @@ public class mainController implements Initializable {
 
     }
 
-    private void GrTableChange() {
-        tableGraphic.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            if (tableGraphic.getSelectionModel().getSelectedItem() != null) {
-                ObservableList selectedCells = tableGraphic.getSelectionModel().getSelectedCells();
-                TablePosition tablePosition = (TablePosition) selectedCells.get(0);
-                Object val = tablePosition.getTableColumn().getCellData(newValue);
-                System.out.println("Selected Value: " + val);
-            }
-        });
-    }
+//    private void GrTableChange() {
+//        tableGraphic.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+//            if (tableGraphic.getSelectionModel().getSelectedItem() != null) {
+//                ObservableList selectedCells = tableGraphic.getSelectionModel().getSelectedCells();
+//                TablePosition tablePosition = (TablePosition) selectedCells.get(0);
+//                Object val = tablePosition.getTableColumn().getCellData(newValue);
+//                System.out.println("Selected Value: " + val);
+//            }
+//        });
+//    }
     private StudentApp studentApp = new StudentApp();
     public void settingButtonAction() {
         studentApp.showSetting();
@@ -497,4 +517,37 @@ public class mainController implements Initializable {
             table_trafic_student.setItems(graph);
         }
     }
+
+    public void addTabelAction(ActionEvent actionEvent) throws SQLException, WriteException, IOException, BiffException, InterruptedException {
+        Instant BEGIN = grDataBegin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+        Instant END = grDataEnd.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+        QueryBuilder<trafic, String> qb = com.trafic.queryBuilder();
+        qb.where().between("data_tr",
+                Date.from(BEGIN), Date.from(END)).and().eq("master_tr",specTabel.getSelectionModel().getSelectedItem()).and().eq("group",group.getText());
+        PreparedQuery<trafic> preparedQuery = qb.prepare();
+        List<trafic> g = com.trafic.query(preparedQuery);
+        if(!tabelData.isEmpty()){
+            tabelData.clear();
+        }
+        g.forEach((r) -> tabelData.add(r));
+        t_Tabel.setItems(tabelData);
+        new makeXLS().makeTabel(specTabel.getSelectionModel().getSelectedItem(),carList.getSelectionModel().getSelectedItem(),group.getText(), new dateCalc().datesBetween(grDataBegin.getValue(),grDataEnd.getValue()),tabelData);
+        openFILE("tmp.xls");
+    }
+    // open files
+    private  void openFILE(String filename) throws IOException, InterruptedException {
+        if(Desktop.isDesktopSupported()){
+            new Thread(()->{
+                try {
+                    Desktop.getDesktop().open(new File(filename));
+                } catch (IOException e) {
+                    new  error().errorMessage(e.toString());
+                }
+            }).start();
+
+
+        }
+
+    }
+
 }

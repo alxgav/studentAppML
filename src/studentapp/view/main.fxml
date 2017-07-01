@@ -5,7 +5,7 @@
 <?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<BorderPane id="AnchorPane" prefHeight="520.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.mainController">
+<BorderPane id="AnchorPane" prefHeight="520.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.mainController">
    <center>
        <TabPane prefHeight="445.0" prefWidth="511.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
            <Tab text="Маршрутний лист">
@@ -119,11 +119,11 @@
                </center>
                </BorderPane>
            </Tab>
-           <Tab text="Графік">
+           <Tab text="Табель">
                <BorderPane prefHeight="200.0" prefWidth="200.0">
                    <top>
                        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <ComboBox fx:id="specComboBox" prefWidth="150.0" promptText="Спеціаліст" />
+                           <ComboBox fx:id="specTabel" prefWidth="150.0" promptText="Спеціаліст" />
                            <Label text="З">
                                <font>
                                    <Font name="System Bold" size="14.0" />
@@ -136,22 +136,25 @@
                                </font>
                            </Label>
                            <DatePicker fx:id="grDataEnd" />
-                           <Button fx:id="grAddStudent" mnemonicParsing="false" onAction="#grAddStudentAction" text="Додати учня" />
-                           <Button fx:id="buttonG" mnemonicParsing="false" onAction="#buttonGAction" text="Button" />
+                           <Button fx:id="addTabelButton" mnemonicParsing="false" onAction="#addTabelAction" text="Сформувати табель" />
+                     <TextField fx:id="group" />
+                     <ComboBox fx:id="carList" prefWidth="150.0" promptText="ТЗ" />
                        </ToolBar>
                    </top>
                    <center>
-                       <TableView id="tablegraphic" fx:id="tableGraphic" editable="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <columns>
-                               <TableColumn fx:id="tgNColumn" prefWidth="75.0" text="№ п/п" />
-                               <TableColumn fx:id="tgStudentColumn" prefWidth="147.0" text="ПІБ" />
-                               <TableColumn fx:id="tgCommonColumn" minWidth="0.0" prefWidth="126.0" text="Календарні навчальні дні / числа місяця / № вправи">
-                                   <columns>
-                                       <TableColumn prefWidth="75.0" styleClass="grColumns" text="data" />
-                                   </columns>
-                               </TableColumn>
-                           </columns>
-                       </TableView>
+                       <TableView id="tablegraphic" fx:id="t_Tabel" editable="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <columns>
+                         <TableColumn fx:id="TabelDataColumn" prefWidth="75.0" text="Дата">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="data_tr" />
+                             </cellValueFactory>
+                         </TableColumn>
+                         <TableColumn fx:id="TabelTimeColumn" prefWidth="75.0" text="Годин">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="time_drive" />
+                             </cellValueFactory>
+                         </TableColumn>
+                     </columns></TableView>
                    </center>
                </BorderPane>
            </Tab>

@@ -55,6 +55,10 @@ public class trafic {
         this.auto_number = auto_number;
     }
 
+    public trafic(Date data_tr, String time_drive) {
+        this.data_tr = data_tr;
+        this.time_drive = time_drive;
+    }
 
     public trafic(String number_tr) {
         this.number_tr = number_tr;

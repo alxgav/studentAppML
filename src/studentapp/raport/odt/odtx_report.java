@@ -38,5 +38,8 @@ public class odtx_report {
             return  new FileOutputStream(new File("template.odt"));
         
     }
+    public void convertToPdf(){
+
+    }
     
 }

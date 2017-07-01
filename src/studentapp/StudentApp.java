@@ -26,7 +26,7 @@ import java.io.IOException;
  * @author Алексей
  */
 public class StudentApp extends Application {
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("view/main.fxml"));
@@ -39,14 +39,16 @@ public class StudentApp extends Application {
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
-
             @Override
             public void handle(WindowEvent event) {
                 Platform.exit();
                 System.exit(0);
             }
         });
+
     }
+
+
 
     // show setting
 
