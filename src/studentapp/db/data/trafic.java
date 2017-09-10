@@ -21,10 +21,10 @@ import java.util.Date;
 public class trafic {
 
       @DatabaseField(generatedId = true)
-       private int id;
+      private int id;
       @DatabaseField
       private String number_tr;
-    @DatabaseField (dataType = DataType.DATE_STRING)
+      @DatabaseField (dataType = DataType.DATE_STRING)
       private Date data_tr;
       @DatabaseField
       private int group;
@@ -34,8 +34,8 @@ public class trafic {
       private String master_tr;
       @DatabaseField
       private String auto;
-    @DatabaseField
-    private String auto_number;
+      @DatabaseField
+      private String auto_number;
       
    
     

@@ -5,7 +5,7 @@
 <?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<BorderPane id="AnchorPane" prefHeight="520.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.mainController">
+<BorderPane id="AnchorPane" prefHeight="520.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.mainController">
    <center>
        <TabPane prefHeight="445.0" prefWidth="511.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
            <Tab text="Маршрутний лист">
@@ -124,6 +124,7 @@
                    <top>
                        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <ComboBox fx:id="specTabel" prefWidth="150.0" promptText="Спеціаліст" />
+                     <ComboBox fx:id="carList" prefWidth="150.0" promptText="ТЗ" />
                            <Label text="З">
                                <font>
                                    <Font name="System Bold" size="14.0" />
@@ -136,9 +137,8 @@
                                </font>
                            </Label>
                            <DatePicker fx:id="grDataEnd" />
+                     <TextField fx:id="group" promptText="№ групи" />
                            <Button fx:id="addTabelButton" mnemonicParsing="false" onAction="#addTabelAction" text="Сформувати табель" />
-                     <TextField fx:id="group" />
-                     <ComboBox fx:id="carList" prefWidth="150.0" promptText="ТЗ" />
                        </ToolBar>
                    </top>
                    <center>
@@ -253,6 +253,31 @@
                        </SplitPane>
                    </center>
                </BorderPane>
+           </Tab>
+         <Tab text="Графік навчальної їзди">
+           <content>
+               <BorderPane>
+                  <top>
+                     <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                       <items>
+                         <Button fx:id="b1" mnemonicParsing="false" onAction="#b1action" text="Button" />
+                           <TextField fx:id="graphicGroup" />
+                           <DatePicker fx:id="gdata1" />
+                           <DatePicker fx:id="gdata2" />
+                       </items>
+                     </ToolBar>
+                  </top>
+                  <center>
+                     <TableView fx:id="table_graph" editable="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <columns>
+                           <TableColumn fx:id="studentCol" onEditCommit="#testCommit" prefWidth="75.0" text="Учень" />
+                        </columns></TableView>
+                  </center>
+               </BorderPane>
+           </content>
+         </Tab>
+           <Tab text="ПЕРЕПІДГОТОВКА" >
+               <fx:include source="retraining/retraining.fxml" fx:id="retrainingPane"/>
            </Tab>
        </TabPane>
    </center>

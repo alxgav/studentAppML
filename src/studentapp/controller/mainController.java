@@ -13,6 +13,8 @@ import fr.opensagres.xdocreport.core.XDocReportException;
 import fr.opensagres.xdocreport.document.IXDocReport;
 import fr.opensagres.xdocreport.template.IContext;
 import fr.opensagres.xdocreport.template.formatter.FieldsMetadata;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +27,10 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.ImageView;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 import jxl.read.biff.BiffException;
 import jxl.write.WriteException;
 import studentapp.StudentApp;
@@ -83,6 +89,19 @@ public class mainController implements Initializable {
     public TableColumn<trafic,String> TabelTimeColumn;
     public TextField group;
     public ComboBox<cars> carList;
+    public TextField graphicGroup;
+    public TableView table_graph;
+    public Button b1;
+    public DatePicker gdata1;
+    public DatePicker gdata2;
+    public TableColumn studentCol;
+
+    //
+    
+    
+    
+    //
+    public ImageView imgStudent;
 
 
     @FXML
@@ -139,6 +158,7 @@ public class mainController implements Initializable {
     private Button printButton;
 
     private trafic t;
+    private student st;
     @FXML
     private  MenuItem deleteTraf;
     @FXML
@@ -166,7 +186,7 @@ public class mainController implements Initializable {
     @FXML
     private TableColumn<trafic, String> tr_mrNumberColumn;
 
-    
+
 
     private ObservableList<master> m = FXCollections.observableArrayList(); //masters
     private ObservableList<cars> car = FXCollections.observableArrayList();//cars_table
@@ -175,8 +195,12 @@ public class mainController implements Initializable {
     private ObservableList<trafic> traf = FXCollections.observableArrayList(); //trafic_table
     private ObservableList ATTIRE = FXCollections.observableArrayList(); //attire
     private ObservableList<trafic> tabelData = FXCollections.observableArrayList();//grafic data
+
+
     private common com = new common();
     private dbOperation dbo = new dbOperation();
+
+
     public mainController() {
     }
     
@@ -184,7 +208,7 @@ public class mainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
 
-//        StringConverter sc = new StringConverter() {
+  //     StringConverter sc = new StringConverter() {
 //            @Override
 //            public String toString(Object t) {
 //                return t == null ? null : t.toString();
@@ -201,8 +225,8 @@ public class mainController implements Initializable {
             setCars();
             setCarsBox();
             setDateDoday();
-
-           traficChanged();
+         //   setStudentData();
+            traficChanged();
             //GrTableChange();
 
             setTraficToday();
@@ -210,6 +234,8 @@ public class mainController implements Initializable {
             tr_num.setText(dbo.getLastNumber());
             grDataBegin.setValue(LocalDate.now().with(firstDayOfMonth()));
             grDataEnd.setValue(LocalDate.now().with(lastDayOfMonth()));
+            gdata1.setValue(LocalDate.now().with(firstDayOfMonth()));
+            gdata2.setValue(LocalDate.now().with(lastDayOfMonth()));
         } catch (SQLException ex) {
             new error().errorMessage(ex.toString());
         } 
@@ -550,4 +576,98 @@ public class mainController implements Initializable {
 
     }
 
+    public void b1action(ActionEvent actionEvent) {
+            StringConverter sc = new StringConverter() {
+            @Override
+            public String toString(Object t) {
+                return t == null ? null : t.toString();
+            }
+
+            @Override
+            public Object fromString(String string) {
+                return string;
+            }
+        };
+        studentCol.setCellFactory(TextFieldTableCell.forTableColumn(sc));
+
+        dateCalc d = new dateCalc();
+
+
+        List<String> columns = d.datesBetween(gdata1.getValue(), gdata2.getValue());
+//        TableColumn [] tableColumns = new TableColumn[columns.size()];
+//        int columnIndex = 0;
+        for(int i=0 ; i<columns.size(); i++) {
+            final int j = i;
+            TableColumn col = new TableColumn(columns.get(i));
+            col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList,String>,ObservableValue<String>>(){
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                    return new SimpleStringProperty(param.getValue().get(j).toString());
+                }
+            });
+            col.setPrefWidth(100);
+            col.setCellFactory(TextFieldTableCell.forTableColumn(sc));
+
+            table_graph.getColumns().addAll(col);
+        }
+        for(int e=0;e<=10;e++){
+            ObservableList<String> row = FXCollections.observableArrayList();
+            row.addAll("");
+            for(int i=0;i<columns.size();i++){
+                row.addAll("");
+            }
+
+            table_graph.getItems().add(row);
+
+        }
+
+    }
+
+    public void testCommit(TableColumn.CellEditEvent cellEditEvent) {
+
+        System.out.println(table_graph.getSelectionModel().getSelectedItem());
+
+    }
+
+//    public void addStdudentBtnAction(ActionEvent actionEvent) throws SQLException {
+//       st = new student(surnameTXT.getText(),firstnameTXT.getText(), middlenameTXT.getText(),"","",null);
+//       studentData.add(st);
+//       studentTable.setItems(studentData);
+//       com.student.create(st);
+//    }
+
+//    private void setStudentData() throws SQLException {
+//        QueryBuilder<student, String> qb = com.student.queryBuilder();
+//        qb.query();
+//        PreparedQuery<student> preparedQuery = qb.prepare();
+//        List<student> g = com.student.query(preparedQuery);
+//        if(!studentData.isEmpty()){
+//            studentData.clear();
+//        }
+//        g.forEach((r) -> studentData.add(r));
+//        studentTable.setItems(studentData);
+//    }
+
+    @FXML
+    private void addBtnAction(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void deleteBtnAction(ActionEvent actionEvent) {
+    }
+//    private void studentChanged(){
+//        st_Table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            QueryBuilder<student, String> qb = com.student.queryBuilder();
+//            try {
+//                qb.where().eq("master", newValue.getMaster_tr()).and().eq("data",  new SimpleDateFormat("dd.MM.yyyy").format(newValue.getData_tr())).and().eq("group",newValue.getGroup());//
+//                PreparedQuery<graph> preparedQuery = qb.prepare();
+//                List<graph> g = com.graph.query(preparedQuery);
+//                graph.clear();
+//                g.forEach((r) -> graph.add(r));
+//                table_trafic_student.setItems(graph);
+//                tr_group.setText(""+newValue.getGroup());
+//            } catch (SQLException ex) {
+//                new  error().errorMessage(ex.toString());
+//            }
+//        });
+//    }
 }

@@ -34,4 +34,6 @@
 .deleteButton{
     -fx-graphic: url("../res/img/delete.png");
 }
-
+#student_image{
+    -fx-fill: yellow;
+}

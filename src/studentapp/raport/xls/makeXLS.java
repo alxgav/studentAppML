@@ -161,8 +161,8 @@ public class makeXLS {
         sheet.addCell(new Label(col, 11,"" , cell_merge));
         sheet.addCell(new Label(col, 12,"" , cell_merge));
         sheet.addCell(new Label(1, 17,Integer.toString(sum) , cell_left)); // переделать
-       new_wb.write();
-       new_wb.close();
+           new_wb.write();
+           new_wb.close();
 
     }
 

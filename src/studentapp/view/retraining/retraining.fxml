@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+<BorderPane id="retrainingPane" prefHeight="520.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.retraining.retraining">
+   <left>
+      <TableView fx:id="studentTable" prefHeight="200.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+        <columns>
+            <TableColumn fx:id="idColumn" prefWidth="50.0" text="id" visible="false">
+                <cellValueFactory>
+                    <PropertyValueFactory property="id" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="surnameColumn" prefWidth="150.0" text="Прізвище">
+                <cellValueFactory>
+                    <PropertyValueFactory property="surname" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="firstnameColumn" prefWidth="150.0" text="Імя">
+                <cellValueFactory>
+                    <PropertyValueFactory property="firstname" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="middlenameColumn" prefWidth="150.0" text="По батькові">
+                <cellValueFactory>
+                    <PropertyValueFactory property="middlename" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+      </TableView>
+   </left>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button mnemonicParsing="false" text="Button" />
+        </items>
+      </ToolBar>
+   </top>
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+   </center>
+   <bottom>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <left>
+            <ToolBar orientation="VERTICAL" BorderPane.alignment="CENTER">
+              <items>
+                <Button mnemonicParsing="false" text="Button" />
+              </items>
+            </ToolBar>
+         </left>
+         <center>
+            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Дата" />
+                <TableColumn prefWidth="75.0" text="Тема" />
+                  <TableColumn prefWidth="75.0" text="Години" />
+                  <TableColumn prefWidth="75.0" text="Назва теми" />
+              </columns>
+            </TableView>
+         </center>
+         <right>
+            <ToolBar orientation="VERTICAL" BorderPane.alignment="CENTER">
+              <items>
+                <Button mnemonicParsing="false" text="Button" />
+              </items>
+            </ToolBar>
+         </right>
+      </BorderPane>
+   </bottom>
+</BorderPane>
