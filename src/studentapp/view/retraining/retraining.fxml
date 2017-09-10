@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <BorderPane id="retrainingPane" prefHeight="520.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.retraining.retraining">
    <left>
@@ -33,10 +35,51 @@
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-          <Button mnemonicParsing="false" text="Button" />
+          <Button fx:id="addStudentBtn" mnemonicParsing="false" onAction="#addStudentBtnAction" text="Додати" />
+            <TextField text="2017" />
         </items>
       </ToolBar>
    </top>
+   <bottom>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <left>
+            <ToolBar orientation="VERTICAL" BorderPane.alignment="CENTER">
+              <items>
+                  <DatePicker />
+                  <CheckBox mnemonicParsing="false" selected="true" text="додати автоматично" />
+                <Button mnemonicParsing="false" text="Додати" />
+                  <Separator prefWidth="200.0" />
+                  <Button layoutX="10.0" layoutY="62.0" mnemonicParsing="false" text="Видалити" />
+                  <Separator prefWidth="200.0" />
+                  <Button layoutX="10.0" layoutY="92.0" mnemonicParsing="false" text="Очистити" />
+              </items>
+            </ToolBar>
+         </left>
+         <center>
+            <TableView fx:id="retTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="dataColumn" prefWidth="100.0" text="Дата" />
+                <TableColumn fx:id="themColumn" prefWidth="75.0" text="Тема" />
+                  <TableColumn fx:id="timeColumn" prefWidth="75.0" text="Години" />
+                  <TableColumn fx:id="descrColumn" prefWidth="250.0" text="Назва теми" />
+              </columns>
+            </TableView>
+         </center>
+         <right>
+            <ToolBar orientation="VERTICAL" BorderPane.alignment="CENTER">
+              <items>
+                <Button mnemonicParsing="false" text="Button" />
+                  <MenuButton mnemonicParsing="false" text="Друк">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="картка водія" />
+                      <MenuItem mnemonicParsing="false" text="Довідка" />
+                    </items>
+                  </MenuButton>
+              </items>
+            </ToolBar>
+         </right>
+      </BorderPane>
+   </bottom>
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -45,37 +88,46 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+               <children>
+                  <TextField fx:id="surnameTXT" promptText="Прізвище">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="firstnameTXT" prefHeight="26.0" prefWidth="154.0" promptText="Імя">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="middlenameTXT" promptText="По батькові">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <ComboBox fx:id="kategTXT" promptText="Категорія">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="instruktorTXT" promptText="Інструктор">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </ComboBox>
+               </children>
+            </VBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="158.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets right="150.0" />
+         </BorderPane.margin>
       </GridPane>
    </center>
-   <bottom>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <left>
-            <ToolBar orientation="VERTICAL" BorderPane.alignment="CENTER">
-              <items>
-                <Button mnemonicParsing="false" text="Button" />
-              </items>
-            </ToolBar>
-         </left>
-         <center>
-            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-              <columns>
-                <TableColumn prefWidth="75.0" text="Дата" />
-                <TableColumn prefWidth="75.0" text="Тема" />
-                  <TableColumn prefWidth="75.0" text="Години" />
-                  <TableColumn prefWidth="75.0" text="Назва теми" />
-              </columns>
-            </TableView>
-         </center>
-         <right>
-            <ToolBar orientation="VERTICAL" BorderPane.alignment="CENTER">
-              <items>
-                <Button mnemonicParsing="false" text="Button" />
-              </items>
-            </ToolBar>
-         </right>
-      </BorderPane>
-   </bottom>
 </BorderPane>

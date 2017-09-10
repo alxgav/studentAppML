@@ -635,17 +635,7 @@ public class mainController implements Initializable {
 //       com.student.create(st);
 //    }
 
-//    private void setStudentData() throws SQLException {
-//        QueryBuilder<student, String> qb = com.student.queryBuilder();
-//        qb.query();
-//        PreparedQuery<student> preparedQuery = qb.prepare();
-//        List<student> g = com.student.query(preparedQuery);
-//        if(!studentData.isEmpty()){
-//            studentData.clear();
-//        }
-//        g.forEach((r) -> studentData.add(r));
-//        studentTable.setItems(studentData);
-//    }
+
 
     @FXML
     private void addBtnAction(ActionEvent actionEvent) {
