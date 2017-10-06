@@ -42,6 +42,7 @@ public class common {
                               "жовтня",
                               "листопада",
                               "грудня"};
+   public String [] kateg = {"A1","B","C", "C1"};
     public common() {
         try {
             this.masters = DaoManager.createDao(con, master.class);

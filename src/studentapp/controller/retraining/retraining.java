@@ -9,10 +9,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import studentapp.common.common;
+import studentapp.db.data.master;
 import studentapp.db.data.student;
+import studentapp.db.dbOperation;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -20,7 +23,9 @@ public class retraining  implements Initializable {
 
     private common com = new common();
     private student st = new student();
+    private dbOperation dbo = new dbOperation();
     private ObservableList<student> studentData = FXCollections.observableArrayList();// student data
+    private ObservableList<master> m = FXCollections.observableArrayList(); //masters
 
     @FXML
     private TableView <student> studentTable;
@@ -51,9 +56,11 @@ public class retraining  implements Initializable {
     @FXML
     private ComboBox kategTXT;
     @FXML
-    private ComboBox instruktorTXT;
+    private ComboBox<master> instruktorTXT;
     @FXML
     private Button addStudentBtn;
+    @FXML
+    private Button saveStudentBtn;
 
     public retraining(){
 
@@ -63,6 +70,9 @@ public class retraining  implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             setStudentData();
+            studentChanged();
+            kategTXT.setItems(FXCollections.observableArrayList(com.kateg));
+            setMaster();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -83,10 +93,6 @@ public class retraining  implements Initializable {
 
     @FXML
     private void addStudentBtnAction(ActionEvent actionEvent) throws SQLException {
-//        st = new student(surnameTXT.getText(),firstnameTXT.getText(), middlenameTXT.getText(),"","",null);
-//       studentData.add(st);
-//       studentTable.setItems(studentData);
-//       com.student.create(st);
         surnameTXT.setText("");
         firstnameTXT.setText("");
         middlenameTXT.setText("");
@@ -94,11 +100,48 @@ public class retraining  implements Initializable {
         instruktorTXT.getSelectionModel().selectFirst();
     }
 
-    private void newStudent(){
-//        surnameTXT.setText("");
-//        firstnameTXT.setText("");
-//        middlenameTXT.setText("");
-//        kategTXT.getSelectionModel().selectFirst();
-//        instruktorTXT.getSelectionModel().selectFirst();
+   private void studentChanged(){
+        studentTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            QueryBuilder<student, String> qb = com.student.queryBuilder();
+            try {
+                qb.where().eq("id",newValue.getId());
+                PreparedQuery<student> preparedQuery = qb.prepare();
+                List<student> st = com.student.query(preparedQuery);
+                surnameTXT.setText(st.get(0).getSurname());
+                firstnameTXT.setText(st.get(0).getFirstname());
+                middlenameTXT.setText(st.get(0).getMiddlename());
+                kategTXT.getSelectionModel().select(st.get(0).getKateg());
+                String instruktor = st.get(0).getInstruktor();
+              //  instruktorTXT.getSelectionModel().select(m.get(0).getId());
+              //  studentData.clear();
+              //  st.forEach();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+   }
+
+    @FXML
+    private void saveStudentBtnAction(ActionEvent actionEvent) throws SQLException {
+       st = new student(surnameTXT.getText(),
+               firstnameTXT.getText(),
+               middlenameTXT.getText(),
+               ""+kategTXT.getSelectionModel().getSelectedItem(),
+               ""+instruktorTXT.getSelectionModel().getSelectedItem(),null);
+               studentData.add(st);
+               com.student.create(st);
+               studentTable.setItems(studentData);
+
+    }
+
+    private void setMaster() throws SQLException {
+        m = dbo.setMaster();
+        List<String> l = new ArrayList<>();
+        m.forEach((r)->l.add(r.getMaster_name()));
+        ObservableList mast = FXCollections.observableArrayList(l);
+        instruktorTXT.setItems(mast);
+
+
+
     }
 }

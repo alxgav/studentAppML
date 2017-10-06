@@ -36,6 +36,7 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
           <Button fx:id="addStudentBtn" mnemonicParsing="false" onAction="#addStudentBtnAction" text="Додати" />
+            <Button fx:id="saveStudentBtn" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#saveStudentBtnAction" text="Зберігти" />
             <TextField text="2017" />
         </items>
       </ToolBar>
