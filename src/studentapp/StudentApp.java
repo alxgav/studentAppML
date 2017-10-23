@@ -7,7 +7,6 @@ package studentapp;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,7 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import studentapp.controller.SettingsController;
 
 import java.awt.*;
@@ -35,17 +33,12 @@ public class StudentApp extends Application {
         String style_file = this.getClass().getResource("style/style.css").toExternalForm();
         scene.getStylesheets().add(style_file);
         stage.getIcons().add(new Image(this.getClass().getResourceAsStream("res/img/gerb_tsou.png")));
-
         stage.setScene(scene);
         stage.show();
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
-            @Override
-            public void handle(WindowEvent event) {
-                Platform.exit();
-                System.exit(0);
-            }
+        stage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
         });
-
     }
 
 
@@ -68,7 +61,6 @@ public class StudentApp extends Application {
             SettingsController controller = loader.getController();
             controller.setDialogStage(dialogSetting);
             dialogSetting.showAndWait();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

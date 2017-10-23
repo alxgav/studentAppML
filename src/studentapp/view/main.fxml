@@ -5,7 +5,7 @@
 <?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<BorderPane id="AnchorPane" prefHeight="520.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.mainController">
+<BorderPane id="AnchorPane" prefHeight="520.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.mainController">
    <center>
        <TabPane prefHeight="445.0" prefWidth="511.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
            <Tab text="Маршрутний лист">
@@ -27,6 +27,12 @@
                            <tooltip>
                               <Tooltip text="Надрукувати маршрутний лист" />
                            </tooltip></Button>
+                        <MenuButton mnemonicParsing="false" text="Маршрутні листи">
+                          <items>
+                            <MenuItem fx:id="mlsButton" mnemonicParsing="false" onAction="#mlsButtonAction" text="Сформувати маршрутні листи" />
+                            <MenuItem fx:id="mlButton" mnemonicParsing="false" onAction="#mlButtonAction" styleClass="addButton" text="Сформувати маршрутний лист" />
+                          </items>
+                        </MenuButton>
                            </buttons>
                            <BorderPane.margin>
                                <Insets left="10.0" right="10.0" />
@@ -276,8 +282,8 @@
                </BorderPane>
            </content>
          </Tab>
-           <Tab text="ПЕРЕПІДГОТОВКА" >
-               <fx:include source="retraining/retraining.fxml" fx:id="retrainingPane"/>
+           <Tab text="ПЕРЕПІДГОТОВКА">
+               <fx:include fx:id="retrainingPane" source="retraining/retraining.fxml" />
            </Tab>
        </TabPane>
    </center>

@@ -7,15 +7,26 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import studentapp.common.CustomDate;
 import studentapp.common.common;
+import studentapp.db.data.cars;
 import studentapp.db.data.master;
 import studentapp.db.data.student;
 import studentapp.db.dbOperation;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -26,41 +37,36 @@ public class retraining  implements Initializable {
     private dbOperation dbo = new dbOperation();
     private ObservableList<student> studentData = FXCollections.observableArrayList();// student data
     private ObservableList<master> m = FXCollections.observableArrayList(); //masters
+    private ObservableList<cars> c = FXCollections.observableArrayList(); //cars
+    @FXML
+    private TableView<student> pTable;
+    @FXML
+    private TableColumn<student, String> surnameColumn;
+    @FXML
+    private TableColumn<student,String> nameColumn;
+    @FXML
+    private TableColumn<student,String> middleColumn;
+    @FXML
+    private TableColumn<student,String> kategColumn;
+    @FXML
+    private TableColumn<student, Integer> payColumn;
+    @FXML
+    private TableColumn<String, CustomDate> data_bColumn;
+    @FXML
+    private TableColumn<String, CustomDate>  data_eColumn;
+    @FXML
+    private TableColumn<student, String> instruktorColumn;
+    @FXML
+    private TableColumn<student, String> carColumn;
+    @FXML
+    private TableColumn<student, Integer> dovColumn;
+    @FXML
+    private DatePicker dat1;
+    @FXML
+    private DatePicker dat2;
+    @FXML
+    private Button perBtn;
 
-    @FXML
-    private TableView <student> studentTable;
-    @FXML
-    private TableColumn <student, Integer> idColumn;
-    @FXML
-    private TableColumn <student, String> surnameColumn;
-    @FXML
-    private TableColumn <student, String> firstnameColumn;
-    @FXML
-    private TableColumn <student, String> middlenameColumn;
-    @FXML
-    private TableView retTable;
-    @FXML
-    private TableColumn dataColumn;
-    @FXML
-    private TableColumn themColumn;
-    @FXML
-    private TableColumn timeColumn;
-    @FXML
-    private TableColumn descrColumn;
-    @FXML
-    private TextField surnameTXT;
-    @FXML
-    private TextField firstnameTXT;
-    @FXML
-    private TextField middlenameTXT;
-    @FXML
-    private ComboBox kategTXT;
-    @FXML
-    private ComboBox<master> instruktorTXT;
-    @FXML
-    private Button addStudentBtn;
-    @FXML
-    private Button saveStudentBtn;
 
     public retraining(){
 
@@ -69,77 +75,92 @@ public class retraining  implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            setStudentData();
-            studentChanged();
-            kategTXT.setItems(FXCollections.observableArrayList(com.kateg));
-            setMaster();
+            setStudent();
+            setEditComboColumn();
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-
-    private void setStudentData() throws SQLException {
-        QueryBuilder<student, String> qb = com.student.queryBuilder();
+    private void setStudent() throws SQLException {
+        QueryBuilder<student,String> qb = com.student.queryBuilder();
         qb.query();
-        PreparedQuery<student> preparedQuery = qb.prepare();
-        List<student> g = com.student.query(preparedQuery);
+        PreparedQuery<student> pq = qb.prepare();
+        List<student> student = com.student.query(pq);
         if(!studentData.isEmpty()){
             studentData.clear();
         }
-        g.forEach((r) -> studentData.add(r));
-        studentTable.setItems(studentData);
+        student.forEach((r)->studentData.add(r));
+        pTable.setItems(studentData);
     }
 
     @FXML
-    private void addStudentBtnAction(ActionEvent actionEvent) throws SQLException {
-        surnameTXT.setText("");
-        firstnameTXT.setText("");
-        middlenameTXT.setText("");
-        kategTXT.getSelectionModel().selectFirst();
-        instruktorTXT.getSelectionModel().selectFirst();
+    private void pTableKeyPressed(KeyEvent keyEvent) {
+        if(keyEvent.getCode()== KeyCode.INSERT){
+            System.out.println("hello");
+        }
     }
 
-   private void studentChanged(){
-        studentTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            QueryBuilder<student, String> qb = com.student.queryBuilder();
-            try {
-                qb.where().eq("id",newValue.getId());
-                PreparedQuery<student> preparedQuery = qb.prepare();
-                List<student> st = com.student.query(preparedQuery);
-                surnameTXT.setText(st.get(0).getSurname());
-                firstnameTXT.setText(st.get(0).getFirstname());
-                middlenameTXT.setText(st.get(0).getMiddlename());
-                kategTXT.getSelectionModel().select(st.get(0).getKateg());
-                String instruktor = st.get(0).getInstruktor();
-              //  instruktorTXT.getSelectionModel().select(m.get(0).getId());
-              //  studentData.clear();
-              //  st.forEach();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+    @FXML
+    private void addPer(ActionEvent actionEvent) throws SQLException {
+        Instant instant1  = dat1.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+        Instant instant2  = dat2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+        st = new student("","","","Категорія","instruktor","car",1000,0, Date.from(instant1),Date.from(instant2));
+        studentData.add(st);
+        pTable.setItems(studentData);
+       // com.student.create(st);
+
+    }
+    private void setEditComboColumn() throws SQLException {
+        String[] n = {"A1","B"};
+        kategColumn.setCellFactory(ComboBoxTableCell.forTableColumn(n));
+        kategColumn.setOnEditCommit((TableColumn.CellEditEvent<student,String> e)->{
+            String newValue = e.getNewValue();
+            int index = e.getTablePosition().getRow();
+            student st = e.getTableView().getItems().get( index );
+            st.setKateg(newValue);
         });
-   }
-
-    @FXML
-    private void saveStudentBtnAction(ActionEvent actionEvent) throws SQLException {
-       st = new student(surnameTXT.getText(),
-               firstnameTXT.getText(),
-               middlenameTXT.getText(),
-               ""+kategTXT.getSelectionModel().getSelectedItem(),
-               ""+instruktorTXT.getSelectionModel().getSelectedItem(),null);
-               studentData.add(st);
-               com.student.create(st);
-               studentTable.setItems(studentData);
-
-    }
-
-    private void setMaster() throws SQLException {
         m = dbo.setMaster();
-        List<String> l = new ArrayList<>();
-        m.forEach((r)->l.add(r.getMaster_name()));
-        ObservableList mast = FXCollections.observableArrayList(l);
-        instruktorTXT.setItems(mast);
+        c = dbo.setCars();
+        int m_size=m.size();
+        String[] cars = new String[c.size()];
+        String [] instr= new String[m_size];
+        for(int i=0;i<=m_size-1;i++){
+            instr[i]=m.get(i).getMaster_name();
+        }
+        for(int i=0;i<=c.size()-1;i++){
+            cars[i]=c.get(i).getCar_name();
+        }
+        instruktorColumn.setCellFactory(ComboBoxTableCell.forTableColumn(instr));
+        instruktorColumn.setOnEditCommit((TableColumn.CellEditEvent<student,String> e)->{
+            student st = e.getTableView().getItems().get(e.getTablePosition().getRow());
+            st.setInstruktor(e.getNewValue());
+        });
+        carColumn.setCellFactory(ComboBoxTableCell.forTableColumn(cars));
+        carColumn.setOnEditCommit((TableColumn.CellEditEvent<student,String> e)->{
+            student st = e.getTableView().getItems().get(e.getTablePosition().getRow());
+            st.setCar(e.getNewValue());
+        });
+        surnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        surnameColumn.setOnEditCommit((TableColumn.CellEditEvent<student,String> e)->{
+           // TablePosition<student, String> pos = e.getTablePosition();
+            student st = e.getTableView().getItems().get(e.getTablePosition().getRow());
+            st.setSurname(e.getNewValue());
+        });
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameColumn.setOnEditCommit((TableColumn.CellEditEvent<student,String> e)->{
+            // TablePosition<student, String> pos = e.getTablePosition();
+            student st = e.getTableView().getItems().get(e.getTablePosition().getRow());
+            st.setFirstname(e.getNewValue());
+        });
+        middleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        middleColumn.setOnEditCommit((TableColumn.CellEditEvent<student,String> e)->{
+            // TablePosition<student, String> pos = e.getTablePosition();
+            student st = e.getTableView().getItems().get(e.getTablePosition().getRow());
+            st.setMiddlename(e.getNewValue());
+        });
 
 
 

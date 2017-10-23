@@ -37,3 +37,6 @@
 #student_image{
     -fx-fill: yellow;
 }
+.fio{
+    -fx-background-color: burlywood;
+}

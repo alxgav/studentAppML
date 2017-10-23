@@ -199,6 +199,10 @@ public class mainController implements Initializable {
 
     private common com = new common();
     private dbOperation dbo = new dbOperation();
+    @FXML
+    private MenuItem mlsButton;
+    @FXML
+    private MenuItem mlButton;
 
 
     public mainController() {
@@ -643,6 +647,19 @@ public class mainController implements Initializable {
 
     @FXML
     private void deleteBtnAction(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void mlsButtonAction(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void mlButtonAction() throws SQLException, ParseException {
+        setStudent(tr_data.getValue());
+        setTrafic();
+        com.trafic.create(t);
+        tr_num.setText(Integer.valueOf(tr_num.getText())+1+"");
+
     }
 //    private void studentChanged(){
 //        st_Table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

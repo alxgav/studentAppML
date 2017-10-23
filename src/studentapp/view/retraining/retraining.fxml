@@ -1,134 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane id="retrainingPane" prefHeight="520.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentapp.controller.retraining.retraining">
-   <left>
-      <TableView fx:id="studentTable" prefHeight="200.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+            <Label text="З" />
+            <DatePicker fx:id="dat1" />
+            <Label text="по" />
+            <DatePicker fx:id="dat2" />
+          <Button fx:id="perBtn" mnemonicParsing="false" onAction="#addPer" text="Вибрати" />
+        </items>
+      </ToolBar>
+   </top>
+   <center>
+      <TableView fx:id="pTable" onKeyPressed="#pTableKeyPressed" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" editable="true">
         <columns>
-            <TableColumn fx:id="idColumn" prefWidth="50.0" text="id" visible="false">
+          <TableColumn styleClass="fio" text="ПІБ">
+               <columns>
+                   <TableColumn fx:id="surnameColumn" prefWidth="150.0" text="Прізвище">
+                       <cellValueFactory>
+                           <PropertyValueFactory property="surname" />
+                       </cellValueFactory>
+                   </TableColumn>
+                   <TableColumn fx:id="nameColumn" prefWidth="150.0" text="І'мя">
+                       <cellValueFactory>
+                           <PropertyValueFactory property="firstname" />
+                       </cellValueFactory>
+                   </TableColumn>
+                  <TableColumn fx:id="middleColumn" prefWidth="150.0" text="По батькові">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="middlename" />
+                      </cellValueFactory>
+                  </TableColumn>
+               </columns></TableColumn>
+          <TableColumn fx:id="kategColumn" prefWidth="100.0" text="КАТЕГОРІЯ">
+              <cellValueFactory>
+                  <PropertyValueFactory property="kateg" />
+              </cellValueFactory>
+          </TableColumn>
+            <TableColumn fx:id="payColumn" prefWidth="100.0" text="ОПЛАТА">
                 <cellValueFactory>
-                    <PropertyValueFactory property="id" />
+                    <PropertyValueFactory property="payment" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="surnameColumn" prefWidth="150.0" text="Прізвище">
+            <TableColumn fx:id="data_bColumn" prefWidth="130.0" text="ДАТА ПОЧАТКУ">
                 <cellValueFactory>
-                    <PropertyValueFactory property="surname" />
+                    <PropertyValueFactory property="date_b" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="firstnameColumn" prefWidth="150.0" text="Імя">
+            <TableColumn fx:id="data_eColumn" prefWidth="130.0" text="ДАТА ЗАКІНЧЕННЯ">
                 <cellValueFactory>
-                    <PropertyValueFactory property="firstname" />
+                    <PropertyValueFactory property="date_e" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="middlenameColumn" prefWidth="150.0" text="По батькові">
+            <TableColumn fx:id="instruktorColumn" prefWidth="150.0" text="ІНСТРУКТОР">
                 <cellValueFactory>
-                    <PropertyValueFactory property="middlename" />
+                    <PropertyValueFactory property="instruktor" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="carColumn" prefWidth="150.0" text="АВТОМОБІЛЬ">
+                <cellValueFactory>
+                    <PropertyValueFactory property="car" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="dovColumn" prefWidth="120.0" text="№ ДОВІДКИ">
+                <cellValueFactory>
+                    <PropertyValueFactory property="numdov" />
                 </cellValueFactory>
             </TableColumn>
         </columns>
       </TableView>
-   </left>
-   <top>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <items>
-          <Button fx:id="addStudentBtn" mnemonicParsing="false" onAction="#addStudentBtnAction" text="Додати" />
-            <Button fx:id="saveStudentBtn" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#saveStudentBtnAction" text="Зберігти" />
-            <TextField text="2017" />
-        </items>
-      </ToolBar>
-   </top>
+   </center>
    <bottom>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <left>
-            <ToolBar orientation="VERTICAL" BorderPane.alignment="CENTER">
+         <top>
+            <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <items>
-                  <DatePicker />
-                  <CheckBox mnemonicParsing="false" selected="true" text="додати автоматично" />
-                <Button mnemonicParsing="false" text="Додати" />
-                  <Separator prefWidth="200.0" />
-                  <Button layoutX="10.0" layoutY="62.0" mnemonicParsing="false" text="Видалити" />
-                  <Separator prefWidth="200.0" />
-                  <Button layoutX="10.0" layoutY="92.0" mnemonicParsing="false" text="Очистити" />
+                <Button mnemonicParsing="false" text="Button" />
               </items>
             </ToolBar>
-         </left>
+         </top>
          <center>
-            <TableView fx:id="retTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn fx:id="dataColumn" prefWidth="100.0" text="Дата" />
-                <TableColumn fx:id="themColumn" prefWidth="75.0" text="Тема" />
-                  <TableColumn fx:id="timeColumn" prefWidth="75.0" text="Години" />
-                  <TableColumn fx:id="descrColumn" prefWidth="250.0" text="Назва теми" />
+                <TableColumn prefWidth="150.0" text="ДАТА НАВЧАННЯ" />
+                <TableColumn prefWidth="75.0" text="C2" />
               </columns>
             </TableView>
          </center>
-         <right>
-            <ToolBar orientation="VERTICAL" BorderPane.alignment="CENTER">
-              <items>
-                <Button mnemonicParsing="false" text="Button" />
-                  <MenuButton mnemonicParsing="false" text="Друк">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="картка водія" />
-                      <MenuItem mnemonicParsing="false" text="Довідка" />
-                    </items>
-                  </MenuButton>
-              </items>
-            </ToolBar>
-         </right>
       </BorderPane>
    </bottom>
-   <center>
-      <GridPane BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
-               <children>
-                  <TextField fx:id="surnameTXT" promptText="Прізвище">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="firstnameTXT" prefHeight="26.0" prefWidth="154.0" promptText="Імя">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="middlenameTXT" promptText="По батькові">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <ComboBox fx:id="kategTXT" promptText="Категорія">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <ComboBox fx:id="instruktorTXT" promptText="Інструктор">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </ComboBox>
-               </children>
-            </VBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <ImageView fitHeight="158.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </HBox>
-         </children>
-         <BorderPane.margin>
-            <Insets right="150.0" />
-         </BorderPane.margin>
-      </GridPane>
-   </center>
 </BorderPane>
